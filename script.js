@@ -92,6 +92,26 @@ buttons.forEach((button) => {
             number2 = "";
             return;
         }
+
+        // equals button
+        if (value === "=") {
+            // solve full expression
+            handleExpression();
+
+            // reset operator variable
+            operator = "";
+            return;
+        }
+        
+        // operator buttons
+        if (["+", "-", "*", "/"].includes(value)) {
+            // solve full expression first if it exists
+            handleExpression();
+
+            // set value as operator
+            operator = value;
+            return;
+        }
         
         // update display with digit
         updateDigit(value);

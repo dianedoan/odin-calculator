@@ -35,9 +35,11 @@ function operate(operator, num1, num2) {
 }
 
 // variables for html display
-let number1 = "";
+let number1 = "0";
 let operator = "";
 let number2 = "";
+let calculated = false;
+
 
 // get elements
 const display = document.getElementById("display");
@@ -45,13 +47,24 @@ const buttons = document.querySelectorAll("button");
 
 // updates the display with number1/number2 when the calculator's digit buttons are clicked
 function updateDigit(digit) {
-    // before operator button clicked
+    // reset variables when a digit is pressed if calculation has been made previously
+    if (calculated) {
+        number1 = "0";
+        operator = "";
+        number2 = "";
+
+        // mark as not calculated
+        calculated = false;
+    }
+
+    // set digit as number1 before operator button is clicked
     if (operator === "") {
         number1 += digit;
 
         // display number
         display.textContent = number1;
-    } else { // after operator button clicked
+
+    } else { // set digit as number2 after operator button is clicked
         number2 += digit;
 
         // display number
@@ -69,7 +82,7 @@ function handleExpression() {
             display.textContent = "Cannot divide by 0";
             
             // reset variables
-            number1 = "";
+            number1 = "0";
             operator = "";
             number2 = "";
 
@@ -77,8 +90,9 @@ function handleExpression() {
             // call operate function
             const result = operate(operator, Number(number1), Number(number2));
 
-            // check length of result
+            // convert result to string and remove decimals
             const resultStr = result.toString().replace('.', '');
+            // check length of result
             if (resultStr.length >= 15) {
                 // round result to 15 decimal points to prevent display overflow
                 const roundedResult = result.toFixed(15);
@@ -110,9 +124,12 @@ buttons.forEach((button) => {
             display.textContent = 0;
 
             // reset variables
-            number1 = "";
+            number1 = "0";
             operator = "";
             number2 = "";
+
+            // mark as not calculated
+            calculated = false;
             return;
         }
 
@@ -123,16 +140,24 @@ buttons.forEach((button) => {
 
             // reset operator variable
             operator = "";
+
+            // mark as calculated
+            calculated = true;
             return;
         }
         
         // operator buttons
         if (["+", "-", "*", "/"].includes(value)) {
-            // solve full expression first if it exists
-            handleExpression();
+            // if not calculated solve full expression first if it exists
+            if (!calculated) {
+                handleExpression();
+            }
 
             // set value as operator
             operator = value;
+
+            // mark as not calculated 
+            calculated = false;
             return;
         }
         

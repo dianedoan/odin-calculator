@@ -66,8 +66,11 @@ function handleExpression() {
         // call operate function
         const result = operate(operator, Number(number1), Number(number2));
 
+        // round result to 15 decimal points to prevent display overflow
+        const roundedResult = result.toFixed(15);
+
         // display calculated result
-        display.textContent = result;
+        display.textContent = roundedResult;
 
         // set variables
         number1 = result;

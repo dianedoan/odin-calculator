@@ -38,3 +38,30 @@ function operate(operator, num1, num2) {
         return "invalid operator";
     }
 }
+
+// get elements
+const display = document.getElementById("display");
+const buttons = document.querySelectorAll("button");
+
+// updates the display with number1 when the calculator's digit buttons are clicked
+function updateDigit(digit) {
+    // before operator button clicked
+    if (operator === "") {
+        number1 += digit;
+        display.textContent = number1;
+    } else { // after operator button clicked
+        number2 += digit;
+        display.textContent = number2;
+    }
+}
+
+// iterate through each button
+buttons.forEach((button) => {
+    // add a 'click' event listener for each button
+    button.addEventListener("click", () => {
+        const value = button.textContent;
+        
+        // update display with digit
+        updateDigit(value);
+    })
+});

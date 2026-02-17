@@ -1,2 +1,2 @@
 # Calculator
-This is a basic functional calculator created using the all the skills I learned at the end of the Javascript Basics component in The Odin Project.
+This is a basic functional calculator accessible at https://dianedoan.github.io/odin-calculator/ and created using the the skills I learned at the end of the Javascript Basics component in The Odin Project.

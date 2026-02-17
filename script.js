@@ -63,26 +63,38 @@ function updateDigit(digit) {
 function handleExpression() {
     // ensure two numbers and an operator have been clicked
     if (number1 && operator && number2) {
-        // call operate function
-        const result = operate(operator, Number(number1), Number(number2));
-
-        // check length of result
-        const resultStr = result.toString().replace('.', '');
-        if (resultStr.length >= 15) {
-            // round result to 15 decimal points to prevent display overflow
-            const roundedResult = result.toFixed(15);
-
-            // display calculated result
-            display.textContent = roundedResult;
+        // check if dividing by 0
+        if (operator === "/" && number2 === "0") {
+            // display error message
+            display.textContent = "Cannot divide by 0";
+            
+            // reset variables
+            number1 = "";
+            operator = "";
+            number2 = "";
 
         } else {
-            // display calculated result
-            display.textContent = result;
-        }
+            // call operate function
+            const result = operate(operator, Number(number1), Number(number2));
 
-        // set variables
-        number1 = result;
-        number2 = "";
+            // check length of result
+            const resultStr = result.toString().replace('.', '');
+            if (resultStr.length >= 15) {
+                // round result to 15 decimal points to prevent display overflow
+                const roundedResult = result.toFixed(15);
+
+                // display calculated result
+                display.textContent = roundedResult;
+
+            } else {
+                // display calculated result
+                display.textContent = result;
+            }
+
+            // set variables
+            number1 = result;
+            number2 = "";
+        }
     }
 }
 

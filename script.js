@@ -59,13 +59,23 @@ function updateDigit(digit) {
 
     // set digit as number1 before operator button is clicked
     if (operator === "") {
-        number1 += digit;
+        // prevent leading 0s
+        if (number1 === "0") {
+            number1 = digit;
+        } else {
+            number1 += digit;
+        }
 
         // display number
         display.textContent = number1;
 
     } else { // set digit as number2 after operator button is clicked
-        number2 += digit;
+        // prevent leading 0s
+        if (number2 === "0") {
+            number2 = digit;
+        } else {
+            number2 += digit;
+        }
 
         // display number
         display.textContent = number2;
